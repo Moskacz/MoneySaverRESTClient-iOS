@@ -23,19 +23,25 @@ class HTTPClientImplementation: HTTPClient {
         self.session = sessionProvider.getSession()
     }
     
-    func GET(withRequestParameters parameters: HTTPRequestParameters) {
-        
+    func performRequest(withParameters parameters: HTTPRequestParameters) {
+        let urlRequest = request(withParameters: parameters)
+        session.dataTask(with: urlRequest) { (data: Data?, response: URLResponse?, errpr: Error?) in
+            
+        }
     }
     
-    func POST(withRequestParameters parameters: HTTPRequestParameters) {
+    private func request(withParameters parameters: HTTPRequestParameters) -> URLRequest {
+        var request = URLRequest(url: parameters.url)
+        request.httpMethod = parameters.method.rawValue
         
-    }
-    
-    func PUT(withRequestParameters parameters: HTTPRequestParameters) {
+        if let parameters = parameters.parameters {
+            do {
+                request.httpBody = try JSONSerialization.data(withJSONObject: parameters, options: [])
+            } catch {
+                
+            }
+        }
         
-    }
-    
-    func DELETE(withRequestParameters parameters: HTTPRequestParameters) {
-        
+        return request
     }
 }

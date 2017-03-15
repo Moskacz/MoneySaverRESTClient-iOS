@@ -9,8 +9,5 @@
 import Foundation
 
 protocol HTTPClient {
-    func GET(withRequestParameters parameters: HTTPRequestParameters)
-    func POST(withRequestParameters parameters: HTTPRequestParameters)
-    func PUT(withRequestParameters parameters: HTTPRequestParameters)
-    func DELETE(withRequestParameters parameters: HTTPRequestParameters)
+    func performRequest(withParameters parameters: HTTPRequestParameters)
 }
