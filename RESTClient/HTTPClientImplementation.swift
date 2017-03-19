@@ -23,11 +23,10 @@ class HTTPClientImplementation: HTTPClient {
         self.session = sessionProvider.getSession()
     }
     
-    func performRequest(withParameters parameters: HTTPRequestParameters) {
+    func performRequest(withParameters parameters: HTTPRequestParameters,
+                        completion: @escaping HTTPRequestCompletion) {
         let urlRequest = request(withParameters: parameters)
-        session.dataTask(with: urlRequest) { (data: Data?, response: URLResponse?, errpr: Error?) in
-            
-        }
+        session.dataTask(with: urlRequest, completionHandler: completion).resume()
     }
     
     private func request(withParameters parameters: HTTPRequestParameters) -> URLRequest {
