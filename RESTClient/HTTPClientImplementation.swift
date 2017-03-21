@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import RxSwift
 
 public enum HTTPMethod: String {
     case get = "GET"
@@ -23,10 +24,24 @@ public class HTTPClientImplementation: HTTPClient {
         self.session = sessionProvider.getSession()
     }
     
-    public func performRequest(withParameters parameters: HTTPRequestParameters,
-                        completion: @escaping HTTPRequestCompletion) {
-        let urlRequest = request(withParameters: parameters)
-        session.dataTask(with: urlRequest, completionHandler: completion).resume()
+    public func performRequest(withParameters parameters: HTTPRequestParameters) -> Observable<Data?> {
+        return Observable<Data?>.create({ (observer: AnyObserver<Data?>) -> Disposable in
+            let urlRequest = self.request(withParameters: parameters)
+            let task = self.session.dataTask(with: urlRequest, completionHandler: { (data: Data?, response: URLResponse?, error: Error?) in
+                if let requestError = error {
+                    observer.onError(requestError)
+                } else {
+                    observer.onNext(data)
+                    observer.onCompleted()
+                }
+            })
+            
+            task.resume()
+            
+            return Disposables.create {
+                task.cancel()
+            }
+        })
     }
     
     private func request(withParameters parameters: HTTPRequestParameters) -> URLRequest {
