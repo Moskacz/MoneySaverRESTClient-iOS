@@ -12,6 +12,9 @@ import RxSwift
 
 public protocol TransactionsRESTClient {
     func getTransactions() -> Observable<[Transaction]>
+    func postTransaction() -> Observable<Transaction>
+    func putTransaction() -> Observable<Transaction>
+    func deleteTransaction() -> Observable<Transaction>
 }
 
 public class TransactionsRESTClientImplementation: TransactionsRESTClient {
@@ -24,6 +27,18 @@ public class TransactionsRESTClientImplementation: TransactionsRESTClient {
     
     public func getTransactions() -> Observable<[Transaction]> {
         return Observable.just([])
+    }
+    
+    public func postTransaction() -> Observable<Transaction> {
+        return Observable.empty()
+    }
+    
+    public func putTransaction() -> Observable<Transaction> {
+        return Observable.empty()
+    }
+    
+    public func deleteTransaction() -> Observable<Transaction> {
+        return Observable.empty()
     }
     
 }
