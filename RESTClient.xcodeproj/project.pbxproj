@@ -17,6 +17,7 @@
 		35C2343E1E81B05A0095AFFE /* TransactionsRESTClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35C2343D1E81B05A0095AFFE /* TransactionsRESTClient.swift */; };
 		35C234421E81B5020095AFFE /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 35C234411E81B5020095AFFE /* RxSwift.framework */; };
 		35C234431E81B5110095AFFE /* RxSwift.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 35C234411E81B5020095AFFE /* RxSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		35D5A05A1E8309CF00E6156F /* TransactionFromRESTResponseMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35D5A0591E8309CF00E6156F /* TransactionFromRESTResponseMapper.swift */; };
 		35D86C821E787FDE00D74725 /* RESTClient.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 35D86C781E787FDD00D74725 /* RESTClient.framework */; };
 		35D86C871E787FDE00D74725 /* RESTClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35D86C861E787FDE00D74725 /* RESTClientTests.swift */; };
 		35D86C891E787FDE00D74725 /* RESTClient.h in Headers */ = {isa = PBXBuildFile; fileRef = 35D86C7B1E787FDD00D74725 /* RESTClient.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -56,6 +57,7 @@
 		35C2343D1E81B05A0095AFFE /* TransactionsRESTClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionsRESTClient.swift; sourceTree = "<group>"; };
 		35C2343F1E81B4EF0095AFFE /* RxBlocking.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxBlocking.framework; path = Carthage/Build/iOS/RxBlocking.framework; sourceTree = "<group>"; };
 		35C234411E81B5020095AFFE /* RxSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxSwift.framework; path = Carthage/Build/iOS/RxSwift.framework; sourceTree = "<group>"; };
+		35D5A0591E8309CF00E6156F /* TransactionFromRESTResponseMapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionFromRESTResponseMapper.swift; sourceTree = "<group>"; };
 		35D86C781E787FDD00D74725 /* RESTClient.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RESTClient.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		35D86C7B1E787FDD00D74725 /* RESTClient.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RESTClient.h; sourceTree = "<group>"; };
 		35D86C7C1E787FDD00D74725 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -98,6 +100,7 @@
 			isa = PBXGroup;
 			children = (
 				35C2343D1E81B05A0095AFFE /* TransactionsRESTClient.swift */,
+				35D5A0591E8309CF00E6156F /* TransactionFromRESTResponseMapper.swift */,
 			);
 			path = Transactions;
 			sourceTree = "<group>";
@@ -260,6 +263,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				35D5A05A1E8309CF00E6156F /* TransactionFromRESTResponseMapper.swift in Sources */,
 				35A81B1F1E79C08300C79562 /* HTTPClientImplementation.swift in Sources */,
 				35C2343E1E81B05A0095AFFE /* TransactionsRESTClient.swift in Sources */,
 				35A81B231E79CEC400C79562 /* URLSessionProviderImplementation.swift in Sources */,

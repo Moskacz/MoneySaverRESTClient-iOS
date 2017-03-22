@@ -12,11 +12,11 @@ public enum MappingError: Error {
     case couldNotParse
 }
 
-public class Mapper<T,U>: MapperType {
+open class Mapper<T,U>: MapperType {
     public typealias FromType = T
     public typealias ToType = U
     
-    public func map(fromType type: T) throws -> U {
+    open func map(fromType type: T) throws -> U {
         throw MappingError.couldNotParse
     }
 }
