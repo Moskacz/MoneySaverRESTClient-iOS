@@ -16,6 +16,10 @@ public enum HTTPMethod: String {
     case delete = "DELETE"
 }
 
+public enum ResponseParsingError: Error {
+    case couldNotParse
+}
+
 public class HTTPClientImplementation: HTTPClient {
     
     private let session: URLSession
@@ -24,16 +28,31 @@ public class HTTPClientImplementation: HTTPClient {
         self.session = sessionProvider.getSession()
     }
     
-    public func performRequest(withParameters parameters: HTTPRequestParameters) -> Observable<Data?> {
-        return Observable<Data?>.create({ (observer: AnyObserver<Data?>) -> Disposable in
+    public func performRequest(withParameters parameters: HTTPRequestParameters) -> Observable<[AnyHashable: Any]> {
+        return Observable<[AnyHashable: Any]>.create({ (observer: AnyObserver<[AnyHashable: Any]>) -> Disposable in
             let urlRequest = self.request(withParameters: parameters)
             let task = self.session.dataTask(with: urlRequest, completionHandler: { (data: Data?, response: URLResponse?, error: Error?) in
                 if let requestError = error {
                     observer.onError(requestError)
-                } else {
-                    observer.onNext(data)
-                    observer.onCompleted()
+                    return
                 }
+                
+                if let responseData = data {
+                    do {
+                        let jsonObject = try JSONSerialization.jsonObject(with: responseData, options: .allowFragments)
+                        if let json = jsonObject as? [AnyHashable: Any] {
+                            observer.onNext(json)
+                            observer.onCompleted()
+                        } else {
+                            observer.onError(ResponseParsingError.couldNotParse)
+                        }
+                    } catch {
+                        observer.onError(error)
+                    }
+                } else {
+                    observer.onError(ResponseParsingError.couldNotParse)
+                }
+                
             })
             
             task.resume()

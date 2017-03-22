@@ -10,5 +10,5 @@ import Foundation
 import RxSwift
 
 public protocol HTTPClient {
-    func performRequest(withParameters parameters: HTTPRequestParameters) -> Observable<Data?>
+    func performRequest(withParameters parameters: HTTPRequestParameters) -> Observable<[AnyHashable: Any]>
 }

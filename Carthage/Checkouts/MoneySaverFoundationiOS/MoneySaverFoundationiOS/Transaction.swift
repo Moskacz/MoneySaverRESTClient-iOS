@@ -9,7 +9,13 @@
 import Foundation
 
 public struct Transaction {
-    let title: String
-    let value: NSDecimalNumber
-    let category: String
+    public let title: String
+    public let value: NSDecimalNumber
+    public let category: String
+    
+    public init(title: String, value: NSDecimalNumber, category: String) {
+        self.title = title
+        self.value = value
+        self.category = category
+    }
 }
