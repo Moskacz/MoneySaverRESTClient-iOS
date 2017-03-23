@@ -21,15 +21,19 @@ public class TransactionsRESTClientImplementation: TransactionsRESTClient {
     
     private let httpClient: HTTPClient
     private let mapper: Mapper<[AnyHashable:Any], Transaction>
+    private let router: Router
     
     init(httpClient: HTTPClient,
-         mapper: Mapper<[AnyHashable:Any], Transaction>) {
+         mapper: Mapper<[AnyHashable:Any], Transaction>,
+         router: Router) {
         self.httpClient = httpClient
         self.mapper = mapper
+        self.router = router
     }
     
     public func getTransactions() -> Observable<[Transaction]> {
-        let requestParameters = HTTPRequestParameters(url: URL(string: "")!, method: .get, parameters: nil)
+        let url = router.getAllURL()
+        let requestParameters = HTTPRequestParameters(url: url, method: .get, parameters: nil)
         return httpClient.performRequest(withParameters: requestParameters).map({ (json: [AnyHashable : Any]) -> [Transaction] in
             guard let transactionsJSON = json["transactions"] as? [[AnyHashable: Any]] else {
                 return []
@@ -42,7 +46,8 @@ public class TransactionsRESTClientImplementation: TransactionsRESTClient {
     }
     
     public func postTransaction(withIdentifier identifier: String, parameters: [AnyHashable : Any]) -> Observable<Transaction> {
-        let requestParameters = HTTPRequestParameters(url: URL(string: "")!, method: .post, parameters: parameters)
+        let url = router.postURL(entityID: identifier)
+        let requestParameters = HTTPRequestParameters(url: url, method: .post, parameters: parameters)
         return httpClient.performRequest(withParameters: requestParameters).flatMap({ (json: [AnyHashable : Any]) -> Observable<Transaction> in
             do {
                 let transaction = try self.mapper.map(fromType: json)
@@ -54,7 +59,8 @@ public class TransactionsRESTClientImplementation: TransactionsRESTClient {
     }
     
     public func putTransaction(withIdentifier identifier: String, parameters: [AnyHashable : Any]) -> Observable<Transaction> {
-        let requestParameters = HTTPRequestParameters(url: URL(string: "")!, method: .put, parameters: parameters)
+        let url = router.putURL(entityID: identifier)
+        let requestParameters = HTTPRequestParameters(url: url, method: .put, parameters: parameters)
         return httpClient.performRequest(withParameters: requestParameters).flatMap({ (json: [AnyHashable : Any]) -> Observable<Transaction> in
             do {
                 let transaction = try self.mapper.map(fromType: json)
@@ -66,7 +72,8 @@ public class TransactionsRESTClientImplementation: TransactionsRESTClient {
     }
     
     public func deleteTransaction(withIdentifier identifier: String) -> Observable<Void> {
-        let requestParameters = HTTPRequestParameters(url: URL(string: "")!, method: .delete, parameters: nil)
+        let url = router.deleteURL(entityID: identifier)
+        let requestParameters = HTTPRequestParameters(url: url, method: .delete, parameters: nil)
         return httpClient.performRequest(withParameters: requestParameters).map { _ -> Void in
             return ()
         }
