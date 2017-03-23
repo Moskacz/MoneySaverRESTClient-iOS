@@ -9,9 +9,9 @@
 import Foundation
 import MoneySaverFoundationiOS
 
-class TransactionFromRESTResponseMapper: Mapper<[AnyHashable:Any?], Transaction> {
+class TransactionFromRESTResponseMapper: Mapper<[AnyHashable:Any], Transaction> {
     
-    override func map(fromType type: [AnyHashable : Any?]) throws -> Transaction {
+    override func map(fromType type: [AnyHashable : Any]) throws -> Transaction {
         guard let title = type["title"] as? String,
             let value = type["value"] as? Double,
             let category = type["category"] as? String else {

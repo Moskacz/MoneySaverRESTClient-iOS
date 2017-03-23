@@ -16,6 +16,8 @@ open class Mapper<T,U>: MapperType {
     public typealias FromType = T
     public typealias ToType = U
     
+    public init() {}
+    
     open func map(fromType type: T) throws -> U {
         throw MappingError.couldNotParse
     }
